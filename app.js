@@ -10,7 +10,12 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
-app.post('/upload', function(req, res){
+function onError(res, err) {
+  console.log('An error has occured: \n' + err);
+  return res.status(500);
+}
+
+app.post('/upload', function (req, res) {
 
   // create an incoming form object
   var form = new formidable.IncomingForm();
@@ -24,12 +29,19 @@ app.post('/upload', function(req, res){
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+    fs.rename(file.path, path.join(form.uploadDir, file.name), function (error) {
+
+      if (error) {
+        return onError(res, error);
+      }
+
+      console.log('done');
+    });
   });
 
   // log any errors that occur
-  form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
+  form.on('error', function(error) {
+    return onError(res, error);
   });
 
   // once all the files have been uploaded, send a response to the client
