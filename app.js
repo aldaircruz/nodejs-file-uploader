@@ -1,8 +1,13 @@
+require('dotenv').config();
+
 var express = require('express');
 var app = express();
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+
+const port = process.env.PORT;
+const uploadDir = path.resolve(process.env.UPLOAD_DIR);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -24,7 +29,7 @@ app.post('/upload', function (req, res) {
   form.multiples = true;
 
   // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/uploads');
+  form.uploadDir = uploadDir;
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
@@ -54,6 +59,6 @@ app.post('/upload', function (req, res) {
 
 });
 
-var server = app.listen(3000, function(){
-  console.log('Server listening on port 3000');
+var server = app.listen(port, function(){
+  console.log(`Server listening on port ${port}`);
 });
