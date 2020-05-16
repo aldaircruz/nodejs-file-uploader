@@ -34,3 +34,6 @@ node_modules
 
 # environment variables
 .env
+
+#default upload folder
+uploads

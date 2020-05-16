@@ -28,8 +28,14 @@ app.post('/upload', function (req, res) {
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true;
 
+  var uploadSessionFolder = path.join(uploadDir, process.hrtime.bigint().toString());
+
+  if (!fs.existsSync(uploadSessionFolder)) {
+    fs.mkdirSync(uploadSessionFolder);
+  }
+
   // store all uploads in the /uploads directory
-  form.uploadDir = uploadDir;
+  form.uploadDir = uploadSessionFolder;
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
