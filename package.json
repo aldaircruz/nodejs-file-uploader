@@ -1,12 +1,17 @@
 {
-  "name": "file-uploader",
+  "name": "nodejs-file-uploader",
   "version": "1.0.0",
   "description": "An AJAX file uploader using JS and NodeJS",
   "main": "app.js",
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Fady Makram",
+  "author": "Aldair Cruz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aldaircruz/nodejs-file-uploader"
+  },
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
